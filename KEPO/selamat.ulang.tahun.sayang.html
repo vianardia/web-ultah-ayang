@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sayangku! 💝</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .page {
+            min-height: 100vh;
+            display: none;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow-y: auto;
+        }
+
+        .page.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 1s;
+        }
+
+        .question-container {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            max-width: 600px;
+            width: 90%;
+            margin: 20px auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        input {
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 300px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        button {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+            margin: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes typing {
+            0% {
+                width: 0;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        .input-animate {
+            animation: typing 2s steps(30) 1s forwards;
+            overflow: hidden;
+            border-right: 2px solid #fff;
+        }
+
+        .birthday-card {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            max-width: 800px;
+            width: 90%;
+            margin: 20px auto;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: transform 0.5s;
+        }
+
+        .birthday-card:hover {
+            transform: rotateY(5deg);
+        }
+
+        .message {
+            margin: 20px 0;
+            font-size: 1.2em;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s;
+        }
+
+        .message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Styling untuk Notifikasi */
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff1493;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 18px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            z-index: 9999;
+        }
+
+        .notification.show {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <!-- Notifikasi -->
+    <div id="notification" class="notification">🎉 Selamat Ulang Tahun Sayang! 🎉</div>
+
+    <div class="heart-bg">❤️</div>
+
+    <!-- Page 1: First Question -->
+    <div id="page1" class="page active">
+        <div class="question-container">
+            <h2>💝 Welcome to Special Birthday Message 💝</h2>
+            <p>Pertanyaan #1:</p>
+            <p>Masukkan nama kamu yang lengkap yaa sayang</p>
+            <input type="text" id="answer1" placeholder="Jawab yaaa sayanggg ..." oninput="animateInput()">
+            <button onclick="nextPage(1)">Next ➡️</button>
+        </div>
+    </div>
+
+    <!-- Page 2: Second Question -->
+    <div id="page2" class="page">
+        <div class="question-container">
+            <h2>🎀 Getting Closer... 🎀</h2>
+            <p>Pertanyaan #2:</p>
+            <p>Tanggal berapa ulang tahunmu?</p>
+            <input type="text" id="answer2" placeholder="Format: DD/MM/YYYY">
+            <button onclick="nextPage(2)">Next ➡️</button>
+        </div>
+    </div>
+
+    <!-- Page 3: Third Question -->
+    <div id="page3" class="page">
+        <div class="question-container">
+            <h2>💖 Almost There... 💖</h2>
+            <p>Pertanyaan #3:</p>
+            <p>Apa panggilan sayang untukmu?</p>
+            <input type="text" id="answer3" placeholder="Jawab dengan manis...">
+            <button onclick="nextPage(3)">Next ➡️</button>
+        </div>
+    </div>
+
+    <!-- Page 4: Fourth Question -->
+    <div id="page4" class="page">
+        <div class="question-container">
+            <h2>💞 Sedikit Lagi! 💞</h2>
+            <p>Pertanyaan #4:</p>
+            <p>Apa makanan favoritmu?</p>
+            <input type="text" id="answer4" placeholder="Jawab dengan benar...">
+            <button onclick="nextPage(4)">Next ➡️</button>
+        </div>
+    </div>
+
+    <!-- Page 5: Fifth Question -->
+    <div id="page5" class="page">
+        <div class="question-container">
+            <h2>💕 Hampir Sampai! 💕</h2>
+            <p>Pertanyaan #5:</p>
+            <p>Dimana tempat favorit kita bersama?</p>
+            <input type="text" id="answer5" placeholder="Jawab dengan penuh kenangan...">
+            <button onclick="nextPage(5)">Show Birthday Message ✨</button>
+        </div>
+    </div>
+
+    <!-- Final Page -->
+    <div id="page6" class="page">
+        <div class="birthday-card">
+            <h1>🎉 Happy Birthday! 🎉</h1>
+            <div id="birthdayMessages">
+                <div class="message">Selamat Ulang Tahun yang ke-22 yaa sayangggg</div>
+                <div class="message">Regita Syawalia Safitri! 👑</div>
+                <div class="message">Pacarku yang paling gemesh dan spesial...</div>
+                <div class="message">Di hari spesialmu ini, aku berharap:</div>
+                <div class="message">✨ Semoga selalu dalam lindungan Allah SWT</div>
+                <div class="message">✨ Semua impianmu tercapai</div>
+                <div class="message">✨ Selalu bahagia dan tersenyum</div>
+                <div class="message">✨ Makin sukses dalam karir</div>
+                <div class="message">✨ Dan tentunya makin sayang sama aku 💝</div>
+                <div class="message">💫 Semoga harimu seindah senyummu! 💫</div>
+                <div class="message">🌟 Ingatlah selalu, kamu istimewa! 🌟</div>
+                <div class="message">🎈 Semoga hari ini penuh kejutan manis! 🎈</div>
+                <div class="message">💝 Terima kasih telah menjadi yang terbaik! 💝</div>
+                <div class="message">❤️ Aku bersyukur bisa bersamamu! ❤️</div>
+                <div class="message">I Love You More Than Yesterday,</div>
+                <div class="message">Less Than Tomorrow! ❤️</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function animateInput() {
+            const input = document.getElementById('answer1');
+            input.classList.add('input-animate');
+        }
+
+        function nextPage(page) {
+            let isCorrect = false;
+            const answer = document.getElementById(`answer${page}`).value.toLowerCase().trim();
+
+            switch (page) {
+                case 1:
+                    if (answer === 'regita syawalia safitri') isCorrect = true;
+                    break;
+                case 2:
+                    isCorrect = true;
+                    break;
+                case 3:
+                    isCorrect = true;
+                    break;
+                case 4:
+                    if (answer === 'mie goreng') isCorrect = true;
+                    break;
+                case 5:
+                    isCorrect = true;
+                    break;
+            }
+
+            if (isCorrect) {
+                setTimeout(() => {
+                    document.getElementById(`page${page}`).classList.remove('active');
+                    if (page < 5) {
+                        document.getElementById(`page${page + 1}`).classList.add('active');
+                    } else {
+                        showFinalPage();
+                    }
+                }, 2500);
+            } else {
+                alert('Hmm... sepertinya jawabannya kurang tepat. Coba lagi ya! 💕');
+            }
+        }
+
+        function showFinalPage() {
+            document.getElementById('page6').classList.add('active');
+            const messages = document.querySelectorAll('.message');
+            messages.forEach((message, index) => {
+                setTimeout(() => {
+                    message.classList.add('show');
+                }, index * 500);
+            });
+
+            // Menampilkan notifikasi
+            const notification = document.getElementById('notification');
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
